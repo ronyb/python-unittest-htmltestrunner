@@ -1,12 +1,13 @@
-import unittest
 import datetime
 import os
 import time
+import unittest
 
 from HTMLTestRunner import HTMLTestRunner
 from TestsClass0 import TestsClass0
 from TestsClass1 import TestsClass1
 from TestsClass2 import TestsClass2
+from TestsClass3 import TestsClass3
 
 
 if __name__ == "__main__":
@@ -17,6 +18,7 @@ if __name__ == "__main__":
     testSuite.addTests(testLoader.loadTestsFromTestCase(TestsClass0))
     testSuite.addTests(testLoader.loadTestsFromTestCase(TestsClass1))
     testSuite.addTests(testLoader.loadTestsFromTestCase(TestsClass2))
+    testSuite.addTests(testLoader.loadTestsFromTestCase(TestsClass3))
 
     # HTML Tests Runner
     reportsFolder = "./html-reports"
@@ -30,6 +32,11 @@ if __name__ == "__main__":
     
     htmlTestRunner = HTMLTestRunner(stream=fileStream, verbosity=3, title=reportTitle, description=reportDescription)
     htmlTestRunner.run(testSuite)
+    
+    '''
+    # alternative launch method:
+    unittest.main(testRunner=htmlTestRunner)
+    '''
 
     '''
     # Text Tests Runner

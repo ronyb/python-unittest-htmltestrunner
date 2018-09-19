@@ -193,7 +193,7 @@ class Template_mixin(object):
     %(stylesheet)s
 </head>
 <body>
-<script language="javascript" type="text/javascript">
+<script language="javascript" type="text/javascript"><!--
 output_list = Array();
 
 /* level - 0:Summary; 1:Failed; 2:All */
@@ -278,15 +278,15 @@ function showOutput(id, name) {
                     name,
                     "resizable,scrollbars,status,width=800,height=450");
     d = w.document;
-    d.write("<div class='output'>");
+    d.write("<pre>");
     d.write(html_escape(output_list[id]));
     d.write("\n");
     d.write("<a href='javascript:window.close()'>close</a>\n");
-    d.write("</div>\n");
+    d.write("</pre>\n");
     d.close();
 }
 */
-</script>
+--></script>
 
 %(heading)s
 %(report)s
@@ -306,21 +306,18 @@ function showOutput(id, name) {
 
     STYLESHEET_TMPL = """
 <style type="text/css" media="screen">
+body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
+table       { font-size: 100%; }
+pre         { }
 
-body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 90%;
-}
-
+/* -- heading ---------------------------------------------------------------------- */
 h1 {
-    font-size: 18pt;
-    color: black;
+    font-size: 16pt;
+    color: gray;
 }
-
 .heading {
     margin-top: 0ex;
     margin-bottom: 1ex;
-    text-align: center;
 }
 
 .heading .attribute {
@@ -329,94 +326,65 @@ h1 {
 }
 
 .heading .description {
-    font-weight: bold;
-    font-size: 12pt;
+    margin-top: 4ex;
+    margin-bottom: 6ex;
 }
 
-a {
-    color: #00C;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    color: #C00;
-    text-decoration: underline;
-}
-
-/* a.popup_link {
-    margin-top: 1em;
+/* -- css div popup ------------------------------------------------------------------------ */
+a.popup_link {
 }
 
 a.popup_link:hover {
     color: red;
-} */
+}
 
 .popup_window {
-    /* display: none; */
+    display: none;
     position: relative;
     left: 0px;
     top: 0px;
-    margin: 10px;
-    background-color: white;
-    text-align: center;
-    font-size: 10pt;
+    /*border: solid #627173 1px; */
+    /*padding: 10px; */
+    background-color: #E6E6D6;
+    font-family: "Lucida Console", "Courier HTMLTestRunner", Courier, monospace;
+    text-align: left;
+    font-size: 8pt;
+    /*width: 500px;*/
 }
 
-.test_output {
-    margin: 10px;
-    width: 700px;
-    height: 200px;
-    white-space: pre;
 }
-
+/* -- report ------------------------------------------------------------------------ */
 #show_detail_line {
     margin-top: 3ex;
     margin-bottom: 1ex;
 }
-
 #result_table {
     width: 80%;
     border-collapse: collapse;
     border: 1px solid #777;
-    margin-left:auto; 
-    margin-right:auto;
 }
-
 #header_row {
     font-weight: bold;
     color: white;
     background-color: #777;
 }
-
 #result_table td {
-    border: 1px solid black;
-    text-align: center;
-    vertical-align: top;
+    border: 1px solid #777;
+    padding: 2px;
 }
-
-#result_table td:first-child {
-    font-weight: bold;
-    text-align: left;
-}
-
-#total_row  { 
-    font-weight: bold;
-    background-color: #CCC;
-}
-
-.passClass  { background-color: #adebad; color: black; }
-.failClass  { background-color: #ffb3b3; color: black; font-weight: bold;}
-.errorClass  { background-color: #ffb3b3; color: black; font-weight: bold;}
-
-.passCase   { color: #6c6; font-weight: bold; }
-.failCase   { color: #C00; font-weight: bold; }
-.errorCase  { color: #C00; font-weight: bold; }
+#total_row  { font-weight: bold; }
+.passClass  { background-color: #6c6; }
+.failClass  { background-color: #c60; }
+.errorClass { background-color: #c00; }
+.passCase   { color: #6c6; }
+.failCase   { color: #c60; font-weight: bold; }
+.errorCase  { color: #c00; font-weight: bold; }
 .hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
 
-.testcase   {
-    margin-left: 2em;
-    margin-top: 1em;
+
+/* -- ending ---------------------------------------------------------------------- */
+#ending {
 }
 
 </style>
@@ -430,8 +398,8 @@ a.popup_link:hover {
 
     HEADING_TMPL = """<div class='heading'>
 <h1>%(title)s</h1>
-<p class='description'>%(description)s</p>
 %(parameters)s
+<p class='description'>%(description)s</p>
 </div>
 
 """ # variables: (title, parameters, description)
@@ -446,10 +414,10 @@ a.popup_link:hover {
     #
 
     REPORT_TMPL = """
-<p id='show_detail_line' style='text-align: center;'>Show: |
-<a href='javascript:showCase(0)'>Summary</a> |
-<a href='javascript:showCase(1)'>Failed</a> |
-<a href='javascript:showCase(2)'>All</a> |
+<p id='show_detail_line'>Show
+<a href='javascript:showCase(0)'>Summary</a>
+<a href='javascript:showCase(1)'>Failed</a>
+<a href='javascript:showCase(2)'>All</a>
 </p>
 <table id='result_table'>
 <colgroup>
@@ -487,7 +455,7 @@ a.popup_link:hover {
     <td>%(Pass)s</td>
     <td>%(fail)s</td>
     <td>%(error)s</td>
-    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Details</a></td>
+    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
 </tr>
 """ # variables: (style, desc, count, Pass, fail, error, cid)
 
@@ -506,9 +474,9 @@ a.popup_link:hover {
         <a onfocus='this.blur();' onclick="document.getElementById('div_%(tid)s').style.display = 'none' " >
            [x]</a>
         </div>
-        <textarea class='test_output'>
+        <pre>
         %(script)s
-        </textarea>
+        </pre>
     </div>
     <!--css div popup end-->
 
@@ -688,9 +656,9 @@ class HTMLTestRunner(Template_mixin):
         startTime = str(self.startTime)[:19]
         duration = str(self.stopTime - self.startTime)
         status = []
-        if result.success_count: status.append('| Pass %s | '    % result.success_count)
-        if result.failure_count: status.append('Failure %s | ' % result.failure_count)
-        if result.error_count:   status.append('Error %s | '   % result.error_count  )
+        if result.success_count: status.append('Pass %s'    % result.success_count)
+        if result.failure_count: status.append('Failure %s' % result.failure_count)
+        if result.error_count:   status.append('Error %s'   % result.error_count  )
         if status:
             status = ' '.join(status)
         else:
