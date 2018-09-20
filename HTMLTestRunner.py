@@ -334,7 +334,7 @@ h1 {
 }
 
 a {
-    color: #00C;
+    color: #009;
     text-decoration: none;
     font-weight: bold;
 }
@@ -405,9 +405,9 @@ a.popup_link:hover {
     background-color: #CCC;
 }
 
-.passClass  { background-color: #adebad; color: black; }
-.failClass  { background-color: #ffb3b3; color: black; font-weight: bold;}
-.errorClass  { background-color: #ffb3b3; color: black; font-weight: bold;}
+.passClass  { background-color: #3ed04f; color: black; }
+.failClass  { background-color: #ff3333; color: black; font-weight: bold;}
+.errorClass  { background-color: #ff3333; color: black; font-weight: bold;}
 
 .passCase   { color: #6c6; font-weight: bold; }
 .failCase   { color: #C00; font-weight: bold; }
